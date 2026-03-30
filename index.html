@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartMail AI – Email Reply Generator</title>
+    <!-- Tailwind CSS via CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5', // Indigo 600
+                        'primary-hover': '#4338ca', // Indigo 700
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-200 font-sans">
+    
+    <!-- Navbar -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-10 transition-colors duration-200">
+        <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="mail" class="w-6 h-6 text-primary"></i>
+                <h1 class="text-xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+                    SmartMail AI
+                </h1>
+            </div>
+            <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition" aria-label="Toggle dark mode">
+                <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+                <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Column: Input Panel -->
+        <div class="lg:col-span-5 space-y-6">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-200">
+                <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <i data-lucide="pen-line" class="w-5 h-5 text-gray-500"></i> Compose Reply
+                </h2>
+                
+                <div class="space-y-4">
+                    <!-- Email Text -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Incoming Email</label>
+                        <textarea 
+                            id="emailInput"
+                            class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-3 h-40 focus:ring-2 focus:ring-primary focus:border-transparent outline-none resize-y transition-shadow text-sm"
+                            placeholder="Paste the email you want to reply to here..."
+                        ></textarea>
+                    </div>
+
+                    <!-- Tone Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Reply Tone</label>
+                        <div class="grid grid-cols-3 gap-2" id="toneSelector">
+                            <!-- Tone buttons will be generated here -->
+                        </div>
+                    </div>
+
+                    <!-- Length Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Length</label>
+                        <div class="flex bg-gray-100 dark:bg-gray-900 rounded-lg p-1 border border-gray-200 dark:border-gray-700" id="lengthSelector">
+                            <!-- Length buttons will be generated here -->
+                        </div>
+                    </div>
+
+                    <!-- Generate Button -->
+                    <button 
+                        id="generateBtn"
+                        class="w-full bg-primary hover:bg-primary-hover text-white font-medium py-3 px-4 rounded-xl shadow-sm transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                    >
+                        <i data-lucide="sparkles" class="w-5 h-5"></i>
+                        <span>Generate Replies</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Error / Warning Banner -->
+            <div id="errorBanner" class="hidden bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-4 rounded-xl text-sm border border-red-200 dark:border-red-800 flex items-start gap-2">
+                <i data-lucide="alert-circle" class="w-5 h-5 shrink-0 mt-0.5"></i>
+                <span id="errorMessage">An error occurred.</span>
+            </div>
+        </div>
+
+        <!-- Right Column: Results Panel -->
+        <div class="lg:col-span-7 space-y-6">
+            
+            <!-- Context Header (Intent & Summary) -->
+            <div id="contextPanel" class="hidden bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-200">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                        <i data-lucide="info" class="w-5 h-5 text-gray-400"></i> Email Context
+                    </h3>
+                    <span id="intentBadge" class="px-3 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 rounded-full text-xs font-semibold uppercase tracking-wider">
+                        Request
+                    </span>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider text-xs">AI Summary</p>
+                    <p id="summaryText" class="text-sm text-gray-800 dark:text-gray-200 leading-relaxed"></p>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="hidden h-64 flex flex-col items-center justify-center space-y-4">
+                <div class="relative w-16 h-16">
+                    <div class="absolute inset-0 border-4 border-gray-200 dark:border-gray-700 rounded-full"></div>
+                    <div class="absolute inset-0 border-4 border-primary rounded-full border-t-transparent animate-spin"></div>
+                </div>
+                <p class="text-gray-500 dark:text-gray-400 font-medium animate-pulse">AI is generating replies...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="h-64 flex flex-col items-center justify-center text-center px-4">
+                <div class="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4 text-gray-400">
+                    <i data-lucide="messages-square" class="w-10 h-10"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">No replies yet</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm max-w-sm">
+                    Enter an email on the left, choose your tone, and hit generate to see AI suggestions.
+                </p>
+            </div>
+
+            <!-- Generated Replies Container -->
+            <div id="repliesContainer" class="space-y-4">
+                <!-- Reply cards will be injected here -->
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Templates -->
+    <template id="replyCardTemplate">
+        <div class="reply-card bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all duration-200 group">
+            <div class="flex items-start justify-between gap-4 mb-4">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-sm shrink-0 reply-index">
+                    1
+                </span>
+                <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button class="copy-btn text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition" title="Copy to clipboard">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                    </button>
+                    <!-- Small regenerate button could be added here, but omitted for simplicity -->
+                </div>
+            </div>
+            <div class="reply-content text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap leading-relaxed"></div>
+        </div>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
