@@ -57,7 +57,7 @@ The backend powers the AI capabilities using FastAPI.
    ```
    *Note: On your first run, the Application will download the ~1GB `flan-t5-base` model from HuggingFace to your local cache. This might take a few minutes depending on your internet connection.*
 
-The server will be available at: **http://localhost:5000**
+The server will be available at: **http://localhost:8000**
 
 ---
 
