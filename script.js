@@ -107,7 +107,7 @@ async function handleGenerate() {
     loadingState.style.display = 'flex';
 
     try {
-        const response = await fetch('http://localhost:5000/api/generate', {
+        const response = await fetch('http://localhost:8000/api/generate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -141,7 +141,7 @@ async function handleGenerate() {
         
         let errorMsg = err.message;
         if (errorMsg.includes("Failed to fetch")) {
-            errorMsg = "Ensure the backend server is running on http://localhost:5000";
+            errorMsg = "Ensure the backend server is running on http://localhost:8000";
         }
         showError(`Failed: ${errorMsg}`);
     } finally {
