@@ -1,0 +1,11 @@
+Sample Email 1: Meeting Request
+"Hi team, I’d like to schedule our Q3 planning meeting for next Tuesday. Please let me know if 10 AM or 2 PM works better for you. We need to align on the new feature rollout before the end of the month."
+
+Sample Email 2: Inquiry/Follow-up
+"Hello, I sent over the final draft of the marketing copy last week but haven't heard back. Could you please let me know if there are any revisions needed? We are on a tight deadline for the upcoming launch."
+
+Sample Email 3: Complaint
+"Dear Support, I am writing to express my frustration with the recent delivery of my order #84920. The package arrived damaged and two items were missing. This is unacceptable, and I expect an immediate resolution or refund."
+
+Sample Email 4: Quick Request
+"Hi, can you send me the project update by tomorrow? Thanks!"
