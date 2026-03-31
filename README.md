@@ -1,6 +1,6 @@
 # SmartMail AI - Email Reply Generator
 
-A completely **local**, full-stack web application that takes an incoming email as input and generates intelligent, context-aware reply suggestions with customizable tone and length.
+A full-stack web application that takes an incoming email as input and generates intelligent, context-aware reply suggestions with customizable tone and length.
 
 Powered by FastAPI and local AI (HuggingFace `flan-t5-base`), this application works entirely autonomously without requiring remote LLM APIs, ensuring zero cost and full privacy.
 
@@ -10,9 +10,7 @@ Powered by FastAPI and local AI (HuggingFace `flan-t5-base`), this application w
 - **Dynamic Context**: Analyzes Intent and generates a Summary for the incoming email
 - **Tone Modulation**: Adjust between Formal, Casual, Professional, Friendly, Apologetic, and Assertive tones
 - **Length Constraint**: Generate short, medium, or detailed replies
-- **Hardware Accelerated**: Automatically leverages Apple Silicon (MPS) or CUDA if available
 - **Modern UI**: Dark/Light mode, clean interface built with Tailwind CSS via CDN
-- **Easy Setup**: No Node.js build steps needed. The frontend can run on a simple python HTTP server!
 
 ---
 
@@ -21,14 +19,6 @@ Powered by FastAPI and local AI (HuggingFace `flan-t5-base`), this application w
 The application accurately categorizes emails, summarizes them, and drafts customized responses that you can instantly copy to your clipboard.
 
 ![App Dashboard]()
-
----
-
-## System Requirements
-
-- Python 3.8+
-- ~2GB of open RAM for the `base` language model
-- (Optional but Recomended) Apple Silicon Mac or NVIDIA GPU for faster generation times
 
 ---
 
