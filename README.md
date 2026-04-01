@@ -22,7 +22,7 @@ The application accurately categorizes emails, summarizes them, and drafts custo
 
 ---
 
-## 🛠️ Installation & Setup
+##  Installation & Setup
 
 ### 1. Backend Setup
 
@@ -67,7 +67,7 @@ The frontend is a lightweight HTML/JS application that uses Tailwind CSS over CD
 
 ---
 
-## 🧪 Usage
+##  Usage
 
 Once both servers are running:
 1. Copy an email from the provided `sample_emails.txt` or use your own.
