@@ -30,7 +30,7 @@ The backend powers the AI capabilities using FastAPI.
 
 1. Open a terminal and navigate to the project directory:
    ```bash
-   cd smartmail-ai/backend
+   cd /Users/faizkashmiri/.gemini/antigravity/scratch/smartmail-ai/backend
    ```
 2. Create and activate a Python virtual environment (recommended):
    ```bash
@@ -57,7 +57,7 @@ The frontend is a lightweight HTML/JS application that uses Tailwind CSS over CD
 
 1. Open **another** terminal window and navigate to the frontend directory:
    ```bash
-   cd smartmail-ai/frontend
+   cd /Users/faizkashmiri/.gemini/antigravity/scratch/smartmail-ai/frontend
    ```
 2. Start a simple static file server using Python:
    ```bash
