@@ -30,17 +30,14 @@ def load_model():
     global generator
     print(f"Loading local AI model '{model_name}'... This may take a minute based on your internet and hardware.")
     
-    device_id = -1 # CPU by default in transformers pipeline
+    device_id = -1 
     
     # Check for Apple Silicon (MPS)
     if torch.backends.mps.is_available():
-        print("Apple MPS backend detected. Accelerating with Metal!")
         device_id = "mps"
     elif torch.cuda.is_available():
-        print("CUDA backed detected. Accelerating with GPU!")
         device_id = 0
     else:
-        print("No GPU/MPS detected. Using CPU.")
 
     try:
         generator = pipeline(
